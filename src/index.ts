@@ -18,9 +18,19 @@ app.get("/", async (req, res) => {
   res.send(`Hello, World! The time from the DB is ${rows[0].now}`);
 });
 
-app.get("/hi",async (req, res)=>{
+app.get("/hi", async (req, res) => {
   res.send("Hola mundo!");
 });
+
+app.get("/version", async (req, res) => {
+  res.send("IQ-Coffee, version 0.0.1!");
+});
+
 app.listen(port, () => {
   console.log(`Example app. listening at http://localhost:${port}`);
+});
+
+
+app.post("/sensor", async (req, res) => {
+
 });
