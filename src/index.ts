@@ -32,7 +32,21 @@ app.listen(port, () => {
 
 
 app.post("/sensor", async (req, res) => {
-  var result = { success: false, message: "" }
-
+  var result = { success: false, message: "", data: {} }
+  let dev = req.body.device;
+  let t1 = req.body.temp1;
+  let t2 = req.body.temp2;
+  let t3 = req.body.temp3;
+  let t4 = req.body.temp4;
+  let t5 = req.body.temp5;
+  let timestamp = req.body.timestamp;
+  if (dev !== null){
+    result.success = true;
+  }
+  else
+  {
+    result.success = false;
+    result.message = "El device es obligatorio";
+  }
   res.send(result)
 });
