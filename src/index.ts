@@ -51,13 +51,12 @@ app.post("/sensor", async (req, res) => {
       result.success = false;
       result.message = "El device debe ser un valor valido.";
       res.statusCode = 400;
-      res.send(result)
     }
   }
   else {
     result.success = false;
     result.message = "El device es obligatorio.";
     res.statusCode = 400;
-    res.send(result)
   }
+  res.send(result)
 });
