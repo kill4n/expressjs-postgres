@@ -40,16 +40,24 @@ app.post("/sensor", async (req, res) => {
   let t4 = req.body.temp4;
   let t5 = req.body.temp5;
   let timestamp = req.body.timestamp;
-  if (dev !== null){
-    result.success = true;
-    result.message = 'El device '+ dev+ ' midio las temperaturas el dia '+ timestamp;
-    res.statusCode = 201;
+  if (dev !== null) {
+    if (dev != '') {
+
+      result.success = true;
+      result.message = 'El device ' + dev + ' midio las temperaturas el dia ' + timestamp;
+      res.statusCode = 201;
+    }
+    else {
+      result.success = false;
+      result.message = "El device debe ser un valor valido.";
+      res.statusCode = 400;
+      res.send(result)
+    }
   }
-  else
-  {
+  else {
     result.success = false;
-    result.message = "El device es obligatorio";
+    result.message = "El device es obligatorio.";
     res.statusCode = 400;
+    res.send(result)
   }
-  res.send(result)
 });
