@@ -42,7 +42,7 @@ app.post("/sensor", async (req, res) => {
   let timestamp = req.body.timestamp;
   if (dev !== null){
     result.success = true;
-    result.message = "el device {dev}";
+    result.message = 'El device '+ dev+ ' midio las temperaturas el dia '+ timestamp;
   }
   else
   {
