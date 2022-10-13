@@ -40,7 +40,7 @@ app.post("/sensor", async (req, res) => {
   let t4 = req.body.temp4;
   let t5 = req.body.temp5;
   let timestamp = req.body.timestamp;
-  if (dev !== null) {
+  if (dev != null) {
     if (dev != '') {
 
       result.success = true;
