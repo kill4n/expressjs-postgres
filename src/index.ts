@@ -32,5 +32,7 @@ app.listen(port, () => {
 
 
 app.post("/sensor", async (req, res) => {
+  var result = { success: false, message: "" }
 
+  res.send(result)
 });
