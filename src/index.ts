@@ -43,11 +43,13 @@ app.post("/sensor", async (req, res) => {
   if (dev !== null){
     result.success = true;
     result.message = 'El device '+ dev+ ' midio las temperaturas el dia '+ timestamp;
+    res.statusCode = 201;
   }
   else
   {
     result.success = false;
     result.message = "El device es obligatorio";
+    res.statusCode = 400;
   }
   res.send(result)
 });
