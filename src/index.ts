@@ -44,7 +44,7 @@ app.post("/sensor", async (req, res) => {
     if (dev != '') {
 
       result.success = true;
-      result.message = 'El device ' + dev + ' midio las temperaturas el dia ' + timestamp;
+      result.message = 'El device ' + dev + ' midio las temperaturas el dia ' + timestamp + '.';
       res.statusCode = 201;
     }
     else {
