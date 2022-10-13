@@ -23,7 +23,7 @@ app.get("/hi", async (req, res) => {
 });
 
 app.get("/version", async (req, res) => {
-  res.send({ version: "IQ-Coffee, version 0.0.2!" });
+  res.send({ version: "IQ-Coffee, version 0.0.3!" });
 });
 
 app.listen(port, () => {
