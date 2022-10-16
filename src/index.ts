@@ -26,6 +26,19 @@ app.listen(port, () => {
   console.log(`Example app. listening at http://localhost:${port}`);
 });
 
+app.get("/sensors", async (request, response) => {
+  const { id } = request.params;
+  var result = { success: false, message: "", data: {} }
+  pool.query('SELECT * FROM sensors', (err, res) => {
+    if (err) {
+      result.message = err.message;
+      response.send(result);
+      return;
+    }
+    response.json(res.rows);
+  });
+});
+
 app.get("/sensors/:id", async (request, response) => {
   const { id } = request.params;
   var result = { success: false, message: "", data: {} }
@@ -37,7 +50,6 @@ app.get("/sensors/:id", async (request, response) => {
     }
     response.json(res.rows);
   });
-
 });
 
 app.post("/sensors", async (req, response) => {
