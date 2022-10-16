@@ -18,33 +18,33 @@ app.get("/", async (req, res) => {
   res.send(`Hello, World! The time from the DB is ${rows[0].now}`);
 });
 
-app.get("/hi", async (req, res) => {
-  res.send("Hola mundo!");
-});
-
 app.get("/version", async (req, res) => {
-  res.send({ version: "IQ-Coffee, version 0.0.3!" });
+  res.send({name:"IQ-Coffee", version: "0.1.0" });
 });
 
 app.listen(port, () => {
   console.log(`Example app. listening at http://localhost:${port}`);
 });
 
+let sensor = {
+  device_ID: "",
+  temp_1: "",
+  temp_2: "",
+  temp_3: "",
+  temp_4: "",
+  temp_ambiente: "",
+  humedad: "",
+  timestamp: ""
+}
 
 app.post("/sensor", async (req, res) => {
   var result = { success: false, message: "", data: {} }
-  let dev = req.body.device;
-  let t1 = req.body.temp1;
-  let t2 = req.body.temp2;
-  let t3 = req.body.temp3;
-  let t4 = req.body.temp4;
-  let t5 = req.body.temp5;
-  let timestamp = req.body.timestamp;
-  if (dev != null) {
-    if (dev != '') {
+  let sensor = req.body;
+  if (sensor.device_ID != null) {
+    if (sensor.device_ID != '') {
 
       result.success = true;
-      result.message = 'El device ' + dev + ' midio las temperaturas el dia ' + timestamp + '.';
+      result.message = 'El device ' + sensor.device_ID + ' midio las temperaturas el dia ' + sensor.timestamp + '.';
       res.statusCode = 201;
     }
     else {
