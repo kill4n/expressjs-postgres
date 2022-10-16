@@ -19,44 +19,46 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/version", async (req, res) => {
-  res.send({name:"IQ-Coffee", version: "0.1.0" });
+  res.send({ name: "IQ-Coffee", version: "0.1.0" });
 });
 
 app.listen(port, () => {
   console.log(`Example app. listening at http://localhost:${port}`);
 });
 
-let sensor = {
-  device_ID: "",
-  temp_1: "",
-  temp_2: "",
-  temp_3: "",
-  temp_4: "",
-  temp_ambiente: "",
-  humedad: "",
-  timestamp: ""
-}
 
-app.post("/sensor", async (req, res) => {
+app.post("/sensor", async (req, response) => {
   var result = { success: false, message: "", data: {} }
-  let sensor = req.body;
-  if (sensor.device_ID != null) {
-    if (sensor.device_ID != '') {
 
-      result.success = true;
-      result.message = 'El device ' + sensor.device_ID + ' midio las temperaturas el dia ' + sensor.timestamp + '.';
-      res.statusCode = 201;
+  const { device_Id, temp_1, temp_2, temp_3, temp_4, temp_ambiente, humedad, timestamp } = req.body;
+  if (device_Id != null) {
+    if (device_Id != '') {
+
+      pool.query(
+        'INSERT INTO sensor(device_Id, temp_1, temp_2, temp_3, temp_4, temp_ambiente, humedad, timestamp) VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
+        [device_Id, temp_1, temp_2, temp_3, temp_4, temp_ambiente, humedad, timestamp],
+        (err, res) => {
+          if (err) {
+            response.statusCode = 400;
+            result.message = err.message;
+            return;
+          }
+          result.success = true;
+        }
+      );
+      result.message = 'El device ' + device_Id + ' midio las temperaturas el dia ' + timestamp + '.';
+      response.statusCode = 201;
     }
     else {
       result.success = false;
       result.message = "El device debe ser un valor valido.";
-      res.statusCode = 400;
+      response.statusCode = 400;
     }
   }
   else {
     result.success = false;
     result.message = "El device es obligatorio.";
-    res.statusCode = 400;
+    response.statusCode = 400;
   }
-  res.send(result)
+  response.send(result)
 });
