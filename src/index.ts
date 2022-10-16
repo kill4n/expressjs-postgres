@@ -26,10 +26,10 @@ app.listen(port, () => {
   console.log(`Example app. listening at http://localhost:${port}`);
 });
 
-app.get("/sensor/:id", async (request, response) => {
+app.get("/sensors/:id", async (request, response) => {
   const { id } = request.params;
   var result = { success: false, message: "", data: {} }
-  pool.query('SELECT * FROM sensor WHERE device_Id = $1', [id], (err, res) => {
+  pool.query('SELECT * FROM sensors WHERE device_Id = $1', [id], (err, res) => {
     if (err) {
       result.message = err.message;
       response.send(result);
@@ -40,7 +40,7 @@ app.get("/sensor/:id", async (request, response) => {
 
 });
 
-app.post("/sensor", async (req, response) => {
+app.post("/sensors", async (req, response) => {
   var result = { success: false, message: "", data: {} }
 
   const { device_Id, temp_1, temp_2, temp_3, temp_4, temp_ambiente, humedad, timestamp } = req.body;
@@ -48,7 +48,7 @@ app.post("/sensor", async (req, response) => {
     if (device_Id != '') {
 
       pool.query(
-        'INSERT INTO sensor(device_Id, temp_1, temp_2, temp_3, temp_4, temp_ambiente, humedad, timestamp) VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
+        'INSERT INTO sensors(device_Id, temp_1, temp_2, temp_3, temp_4, temp_ambiente, humedad, timestamp) VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
         [device_Id, temp_1, temp_2, temp_3, temp_4, temp_ambiente, humedad, timestamp],
         (err, res) => {
           if (err) {
@@ -59,7 +59,7 @@ app.post("/sensor", async (req, response) => {
           result.success = true;
         }
       );
-      result.message = 'El device ' + device_Id + ' midio las temperaturas el dia ' + timestamp + '.';
+      result.message = 'Dato insertado correctamente.';
       response.statusCode = 201;
     }
     else {
